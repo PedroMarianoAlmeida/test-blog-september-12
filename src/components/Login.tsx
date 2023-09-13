@@ -1,3 +1,4 @@
+//Redirect to cognito
 const Login = () => {
   return <button>Login</button>;
 };

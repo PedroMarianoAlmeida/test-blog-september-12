@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+//Enable only if user is admin
+
 const NewPostButton = () => {
   return (
     <Link href={`/blog/new`}>
