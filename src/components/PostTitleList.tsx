@@ -1,37 +1,28 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
 
 interface post {
   title: string;
   id: string;
 }
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  database: "patientdb",
-});
-const runQuery = () => {
-  // simple query
-  connection.query(
-    "SELECT id, title FROM posts",
-    function (err, results, fields) {
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
-    }
-  );
-};
-
 //Call api with lambda function, that runs SQL
 const getPosts = async (): Promise<post[]> => {
   //const response = await fetch("https://jsonplaceholder.typicode.com/posts");
   //const posts: post[] = await response.json();
-  runQuery();
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "patientdb",
+  });
+
+  const [rows, fields] = await connection.execute("SELECT * FROM posts");
   const mockPostTitles: post[] = [
     { title: "test", id: "1" },
     { title: "test2", id: "2" },
   ];
+  console.log({ rows, fields });
   return mockPostTitles;
 };
 
