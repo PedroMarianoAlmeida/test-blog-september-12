@@ -2,14 +2,9 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { getPosts } from "@/services/posts";
 
-interface post {
-  title: string;
-  id: string;
-}
-
 const PostTitleList = async () => {
   const posts = await getPosts();
-  console.log("client", { posts });
+
   return (
     <ul>
       {posts.map((post) => (
