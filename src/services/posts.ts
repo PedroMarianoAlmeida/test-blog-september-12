@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import mysql from "mysql2/promise";
 
 interface Post {
@@ -21,7 +21,6 @@ export const getPosts = async (): Promise<Pick<Post, "id" | "title">[]> => {
   return rows as Pick<Post, "id" | "title">[];
 };
 
-
 export const createPost = async (data: Omit<Post, "id">) => {
   const { title, authorId, content } = data;
 
@@ -36,4 +35,20 @@ export const createPost = async (data: Omit<Post, "id">) => {
     [title, authorId, content]
   );
   return rows;
+};
+
+export const fetchPostData = async (id: number) => {
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "patientdb",
+  });
+
+  const [data] = await connection.execute(
+    `SELECT * FROM posts WHERE id = ${id}`
+  );
+
+  const [post]: Post[] = data as Post[];
+
+  return post;
 };

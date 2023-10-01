@@ -1,25 +1,11 @@
 "use client";
+import { fetchPostData } from "@/services/posts";
 import { useEffect, useState } from "react";
 
-//This fetchPostData can run on server? Because needs the client router to get the ID
-const fetchPostData = async (
-  id: string
-): Promise<{ title: string; authorId: string; content: string }> => {
-  //Get data using ID and passing to lambda function that runs SQL
-  //const response = await fetch(`/api/posts/${id}`);
-  //const post = await response.json();
-  const post = {
-    title: `Title post ${id}`,
-    authorId: "1",
-    content: `Content post ${id}`,
-  };
-  return post;
-};
-
-const ViewPostPage = ({ params: { id } }: { params: { id: string } }) => {
+const ViewPostPage = ({ params: { id } }: { params: { id: number } }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  
+
   const getPostData = async () => {
     const { title: asyncTitle, content: asyncContent } = await fetchPostData(
       id
