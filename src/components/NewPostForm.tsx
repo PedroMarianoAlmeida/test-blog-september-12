@@ -9,7 +9,6 @@ const NewPostForm = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({ title, content });
     createPost({ title, content, authorId: 1 });
     setTitle("");
     setContent("");
