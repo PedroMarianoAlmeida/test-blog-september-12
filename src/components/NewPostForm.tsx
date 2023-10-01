@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { createPost } from "@/services/posts";
 
 const NewPostForm = () => {
   const [title, setTitle] = useState("");
@@ -9,9 +10,9 @@ const NewPostForm = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log({ title, content });
-
-    //POST to lambda function that will write to DB (with author ID data)
-    //In somewhere validate if user can post
+    createPost({ title, content, authorId: 1 });
+    setTitle("");
+    setContent("");
   };
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
